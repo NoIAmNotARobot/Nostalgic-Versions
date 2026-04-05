@@ -1,15 +1,13 @@
 package net.noiamnotarobot.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.noiamnotarobot.MinecraftAlpha;
+import net.noiamnotarobot.NostalgicVersions;
 import net.noiamnotarobot.item.AlphaItems;
 import net.noiamnotarobot.sound.AlphaBlockSoundGroups;
 
@@ -23,11 +21,19 @@ public class AlphaBlocks {
                     .instrument(Instrument.BASEDRUM)
                     .requiresTool()),
             true);
-    public static final Block GRASS = Blocks.GRASS_BLOCK;
+    public static final AlphaGrassBlock GRASS = (AlphaGrassBlock) register(
+            "grass",
+            new AlphaGrassBlock(AbstractBlock.Settings.create()
+                    .hardness(0.6F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .mapColor(MapColor.EMERALD_GREEN)
+                    .ticksRandomly()),
+            true
+    );
     public static final Block DIRT = register(
             "dirt",
             new Block(AbstractBlock.Settings.create()
-                    .strength(0.5F)
+                    .hardness(0.5F)
                     .sounds(AlphaBlockSoundGroups.GRAVEL)
                     .mapColor(MapColor.DIRT_BROWN)),
             true);
@@ -40,38 +46,249 @@ public class AlphaBlocks {
                     .instrument(Instrument.BASEDRUM)
                     .requiresTool()),
             true);
-    public static final Block PLANKS = Blocks.OAK_PLANKS;
-    public static final Block SAPLING = Blocks.OAK_SAPLING;
-    public static final Block BEDROCK = Blocks.BEDROCK;
+    public static final Block PLANKS = register(
+            "planks",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(2.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.WOOD)
+                    .mapColor(MapColor.OAK_TAN)
+                    .instrument(Instrument.BASS)
+                    .burnable()),
+            true
+    );
+    public static final Block SAPLING = register(
+            "sapling",
+            new AlphaSaplingBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .mapColor(MapColor.DARK_GREEN)
+                    .noCollision()
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final Block BEDROCK = register(
+            "bedrock",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(-1.0F, 6000000.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .dropsNothing()
+                    .allowsSpawning(Blocks::never)),
+            true
+    );
     public static final Block WATER_MOVING = Blocks.WATER;
     public static final Block WATER_STILL = Blocks.WATER;
     public static final Block LAVA_MOVING = Blocks.LAVA;
     public static final Block LAVA_STILL = Blocks.LAVA;
-    public static final Block SAND = Blocks.SAND;
-    public static final Block GRAVEL = Blocks.GRAVEL;
-    public static final Block ORE_GOLD = Blocks.GOLD_ORE;
-    public static final Block ORE_IRON = Blocks.IRON_ORE;
-    public static final Block ORE_COAL = Blocks.COAL_ORE;
-    public static final Block WOOD = Blocks.OAK_LOG;
-    public static final Block LEAVES = Blocks.OAK_LEAVES;
-    public static final Block SPONGE = Blocks.SPONGE;
-    public static final Block GLASS = Blocks.GLASS;
-    public static final Block CLOTH = Blocks.WHITE_WOOL;
-    public static final Block PLANT_YELLOW = Blocks.DANDELION;
-    public static final Block PLANT_RED = Blocks.POPPY;
-    public static final Block MUSHROOM_BROWN = Blocks.BROWN_MUSHROOM;
-    public static final Block MUSHROOM_RED = Blocks.RED_MUSHROOM;
+    public static final Block SAND = register(
+            "sand",
+            new SandBlock(14406560, AbstractBlock.Settings.create()
+                    .hardness(0.5F)
+                    .sounds(AlphaBlockSoundGroups.SAND)
+                    .mapColor(MapColor.PALE_YELLOW)
+                    .instrument(Instrument.SNARE)),
+            true
+    );
+    public static final Block GRAVEL = register(
+            "gravel",
+            new GravelBlock(AbstractBlock.Settings.create()
+                    .hardness(0.6F)
+                    .sounds(AlphaBlockSoundGroups.GRAVEL)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.SNARE)),
+            true
+    );
+    public static final Block ORE_GOLD = register(
+            "ore_gold",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
+    public static final Block ORE_IRON = register(
+            "ore_iron",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
+    public static final Block ORE_COAL = register(
+            "ore_coal",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
+    public static final Block WOOD = register(
+            "wood",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(2.0F)
+                    .sounds(AlphaBlockSoundGroups.WOOD)
+                    .mapColor(MapColor.OAK_TAN)
+                    .instrument(Instrument.BASS)
+                    .burnable()),
+            true
+    );
+    public static final AlphaLeavesBlock LEAVES = (AlphaLeavesBlock) register(
+            "leaves",
+            new AlphaLeavesBlock(AbstractBlock.Settings.create()
+                    .hardness(0.2F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .ticksRandomly()
+                    .mapColor(MapColor.EMERALD_GREEN)
+                    .nonOpaque()
+                    .allowsSpawning(Blocks::canSpawnOnLeaves)
+                    .suffocates(Blocks::never)
+                    .blockVision(Blocks::never)
+                    .burnable()
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .solidBlock(Blocks::never)),
+            true
+    );
+    public static final Block SPONGE = register(
+            "sponge",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(0.6F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .mapColor(MapColor.YELLOW)),
+            true
+    );
+    public static final Block GLASS = register(
+            "glass",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(0.3F)
+                    .sounds(AlphaBlockSoundGroups.GLASS)
+                    .instrument(Instrument.HAT)
+                    .nonOpaque()
+                    .allowsSpawning(Blocks::never)
+                    .solidBlock(Blocks::never)
+                    .suffocates(Blocks::never)
+                    .blockVision(Blocks::never)),
+            true
+    );
+    public static final Block CLOTH = register(
+            "cloth",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(0.8F)
+                    .sounds(AlphaBlockSoundGroups.CLOTH)
+                    .mapColor(MapColor.WHITE)
+                    .instrument(Instrument.GUITAR)
+                    .burnable()),
+            true
+    );
+    public static final AlphaFlowerBlock PLANT_YELLOW = (AlphaFlowerBlock) register(
+            "plant_yellow",
+            new AlphaFlowerBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .noCollision()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final AlphaFlowerBlock PLANT_RED = (AlphaFlowerBlock) register(
+            "plant_red",
+            new AlphaFlowerBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .noCollision()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final AlphaFlowerBlock MUSHROOM_BROWN = (AlphaFlowerBlock) register(
+            "mushroom_brown",
+            new AlphaFlowerBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .luminance((state) -> 2)
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .noCollision()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final AlphaFlowerBlock MUSHROOM_RED = (AlphaFlowerBlock) register(
+            "mushroom_red",
+            new AlphaFlowerBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .nonOpaque()
+                    .noCollision()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
     public static final Block BLOCK_GOLD = Blocks.GOLD_BLOCK;
     public static final Block BLOCK_STEEL = Blocks.IRON_BLOCK;
     public static final Block STAIR_DOUBLE = Blocks.SMOOTH_STONE_SLAB;
     public static final Block STAIR_SINGLE = Blocks.SMOOTH_STONE_SLAB;
-    public static final Block BRICK = Blocks.BRICKS;
+    public static final Block BRICK = register(
+            "bricks",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(2.0F, 10.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.RED)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
     public static final Block TNT = Blocks.TNT;
-    public static final Block BOOKSHELF = Blocks.BOOKSHELF;
-    public static final Block COBBLESTONE_MOSSY = Blocks.MOSSY_COBBLESTONE;
-    public static final Block OBSIDIAN = Blocks.OBSIDIAN;
+    public static final Block BOOKSHELF = register(
+            "bookshelf",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(1.5F)
+                    .sounds(AlphaBlockSoundGroups.WOOD)
+                    .mapColor(MapColor.OAK_TAN)
+                    .instrument(Instrument.BASS)
+                    .burnable()),
+            true
+    );
+    public static final Block COBBLESTONE_MOSSY = register(
+            "cobblestone_mossy",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(2.0F, 10.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
+    public static final Block OBSIDIAN = register(
+            "obsidian",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(10.0F, 2000.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.BLACK)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
     public static final Block TORCH = Blocks.TORCH;
-    public static final Block FIRE = Blocks.FIRE;
+    public static final Block FIRE = Blocks.FIRE; //make type be AlphaBlockFire
     public static final Block MOB_SPAWNER = Blocks.SPAWNER;
     public static final Block STAIR_COMPACT_WOOD = Blocks.OAK_STAIRS;
     public static final Block CHEST = Blocks.CHEST;
@@ -112,6 +329,6 @@ public class AlphaBlocks {
 
     private static Block register(String name, Block block, boolean makeBlockItem) {
         if (makeBlockItem) AlphaItems.register(name, new BlockItem(block, new Item.Settings()));
-        return Registry.register(Registries.BLOCK, MinecraftAlpha.id(name), block);
+        return Registry.register(Registries.BLOCK, NostalgicVersions.id(name), block);
     }
 }

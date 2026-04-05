@@ -1,0 +1,10 @@
+{
+  "type": "nostalgic-versions:alpha_dim_type",
+  "generator": {
+    "type": "nostalgic-versions:alpha_chunk_gen",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "nostalgic-versions:alpha_biome"
+    }
+  }
+}

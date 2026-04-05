@@ -4,7 +4,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
-import net.noiamnotarobot.MinecraftAlpha;
+import net.noiamnotarobot.NostalgicVersions;
 
 public class AlphaSounds {
     public static final SoundEvent SOUND_STONE_FOOTSTEP = register("step.stone");
@@ -15,11 +15,14 @@ public class AlphaSounds {
     public static final SoundEvent SOUND_SAND_FOOTSTEP = register("step.sand");
 
     public static final SoundEvent SOUND_GLASS_RANDOM = register("random.glass");
+    public static final SoundEvent SOUND_BOW_SHOOT = register("random.bow");
+
+    public static final SoundEvent SOUND_FIRE_IGNITE = register("fire.ignite");
 
     public static void init() {}
 
     public static SoundEvent register(String name) {
-        Identifier id = MinecraftAlpha.id(name);
+        Identifier id = NostalgicVersions.id(name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 }

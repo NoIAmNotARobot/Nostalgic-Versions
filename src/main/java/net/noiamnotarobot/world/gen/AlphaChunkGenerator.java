@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.HeightLimitView;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.biome.source.BiomeAccess;
 import net.minecraft.world.biome.source.BiomeSource;
 import net.minecraft.world.chunk.Chunk;
@@ -17,7 +18,7 @@ import net.minecraft.world.gen.chunk.Blender;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.VerticalBlockSample;
 import net.minecraft.world.gen.noise.NoiseConfig;
-import net.noiamnotarobot.MinecraftAlpha;
+import net.noiamnotarobot.NostalgicVersions;
 import net.noiamnotarobot.block.AlphaBlocks;
 import net.noiamnotarobot.world.gen.noise.NoiseGeneratorOctaves;
 
@@ -198,7 +199,7 @@ public class AlphaChunkGenerator extends ChunkGenerator {
                             for(int var50 = 0; var50 < 4; ++var50) {
                                 Block var51 = Blocks.AIR;
                                 if(var11 * 8 + var30 < var5) {
-                                    if(MinecraftAlpha.winterMode && var11 * 8 + var30 >= var5 - 1) {
+                                    if(NostalgicVersions.winterMode && var11 * 8 + var30 >= var5 - 1) {
                                         var51 = AlphaBlocks.ICE;
                                     } else {
                                         var51 = AlphaBlocks.WATER_STILL;
@@ -319,6 +320,173 @@ public class AlphaChunkGenerator extends ChunkGenerator {
     }
 
     @Override
+    public void generateFeatures(StructureWorldAccess world, Chunk chunk, StructureAccessor structureAccessor) {
+        int var4 = chunk.getPos().x * 16;
+        int var5 = chunk.getPos().z * 16;
+        long var6 = this.rand.nextLong() / 2L * 2L + 1L;
+        long var8 = this.rand.nextLong() / 2L * 2L + 1L;
+        this.rand.setSeed((long)chunk.getPos().x * var6 + (long)chunk.getPos().z * var8 ^ 478868574082066804L);
+        double var10;
+
+        int var12;
+        int var13;
+        int var14;
+        int var15;
+        for(var12 = 0; var12 < 8; ++var12) {
+            var13 = var4 + this.rand.nextInt(16) + 8;
+            var14 = this.rand.nextInt(128);
+            var15 = var5 + this.rand.nextInt(16) + 8;
+            //(new WorldGenDungeons()).generate(this.worldObj, this.rand, var13, var14, var15);
+        }
+
+        for(var12 = 0; var12 < 10; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(128);
+            var15 = var5 + this.rand.nextInt(16);
+            //(new WorldGenClay(32)).generate(this.worldObj, this.rand, var13, var14, var15);
+        }
+
+        for(var12 = 0; var12 < 20; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(128);
+            var15 = var5 + this.rand.nextInt(16);
+            (new AlphaWorldGenMinable(AlphaBlocks.DIRT, 32)).generate(world, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 10; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(128);
+            var15 = var5 + this.rand.nextInt(16);
+            (new AlphaWorldGenMinable(AlphaBlocks.GRAVEL, 32)).generate(world, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 20; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(128);
+            var15 = var5 + this.rand.nextInt(16);
+            (new AlphaWorldGenMinable(AlphaBlocks.ORE_COAL, 16)).generate(world, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 20; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(64);
+            var15 = var5 + this.rand.nextInt(16);
+            (new AlphaWorldGenMinable(AlphaBlocks.ORE_IRON, 8)).generate(world, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 2; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(32);
+            var15 = var5 + this.rand.nextInt(16);
+            (new AlphaWorldGenMinable(AlphaBlocks.ORE_GOLD, 8)).generate(world, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 8; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(16);
+            var15 = var5 + this.rand.nextInt(16);
+            //(new AlphaWorldGenMinable(Block.oreRedstone.blockID, 7)).generate(chunk, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        for(var12 = 0; var12 < 1; ++var12) {
+            var13 = var4 + this.rand.nextInt(16);
+            var14 = this.rand.nextInt(16);
+            var15 = var5 + this.rand.nextInt(16);
+            //(new AlphaWorldGenMinable(Block.oreDiamond.blockID, 7)).generate(chunk, this.rand, new BlockPos(var13, var14, var15));
+        }
+
+        var10 = 0.5D;
+        var12 = (int)((this.mobSpawnerNoise.generateNoiseOctaves((double)var4 * var10, (double)var5 * var10) / 8.0D + this.rand.nextDouble() * 4.0D + 4.0D) / 3.0D);
+        if(var12 < 0) {
+            var12 = 0;
+        }
+
+        if(this.rand.nextInt(10) == 0) {
+            ++var12;
+        }
+
+        AlphaWorldGenerator treeGen = new AlphaWorldGenTrees();
+        if(this.rand.nextInt(10) == 0) {
+            treeGen = new AlphaWorldGenBigTree();
+        }
+
+        int var16;
+        for(var14 = 0; var14 < var12; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = var5 + this.rand.nextInt(16) + 8;
+            treeGen.setScale(1.0D, 1.0D, 1.0D);
+            treeGen.generate(world, this.rand, new BlockPos(var15, chunk.sampleHeightmap(Heightmap.Type.WORLD_SURFACE_WG, var15, var16), var16));
+        }
+
+        int var17;
+        for(var14 = 0; var14 < 2; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = this.rand.nextInt(128);
+            var17 = var5 + this.rand.nextInt(16) + 8;
+            (new AlphaWorldGenFlowers(AlphaBlocks.PLANT_YELLOW)).generate(world, this.rand, new BlockPos(var15, var16, var17));
+        }
+
+        if(this.rand.nextInt(2) == 0) {
+            var14 = var4 + this.rand.nextInt(16) + 8;
+            var15 = this.rand.nextInt(128);
+            var16 = var5 + this.rand.nextInt(16) + 8;
+            (new AlphaWorldGenFlowers(AlphaBlocks.PLANT_RED)).generate(world, this.rand, new BlockPos(var14, var15, var16));
+        }
+
+        if(this.rand.nextInt(4) == 0) {
+            var14 = var4 + this.rand.nextInt(16) + 8;
+            var15 = this.rand.nextInt(128);
+            var16 = var5 + this.rand.nextInt(16) + 8;
+            (new AlphaWorldGenFlowers(AlphaBlocks.MUSHROOM_BROWN)).generate(world, this.rand, new BlockPos(var14, var15, var16));
+        }
+
+        if(this.rand.nextInt(8) == 0) {
+            var14 = var4 + this.rand.nextInt(16) + 8;
+            var15 = this.rand.nextInt(128);
+            var16 = var5 + this.rand.nextInt(16) + 8;
+            (new AlphaWorldGenFlowers(AlphaBlocks.MUSHROOM_RED)).generate(world, this.rand, new BlockPos(var14, var15, var16));
+        }
+
+        for(var14 = 0; var14 < 10; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = this.rand.nextInt(128);
+            var17 = var5 + this.rand.nextInt(16) + 8;
+            //(new WorldGenReed()).generate(this.worldObj, this.rand, var15, var16, var17);
+        }
+
+        for(var14 = 0; var14 < 1; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = this.rand.nextInt(128);
+            var17 = var5 + this.rand.nextInt(16) + 8;
+            //(new WorldGenCactus()).generate(this.worldObj, this.rand, var15, var16, var17);
+        }
+
+        for(var14 = 0; var14 < 50; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = this.rand.nextInt(this.rand.nextInt(120) + 8);
+            var17 = var5 + this.rand.nextInt(16) + 8;
+            //(new WorldGenLiquids(Block.waterMoving.blockID)).generate(this.worldObj, this.rand, var15, var16, var17);
+        }
+
+        for(var14 = 0; var14 < 20; ++var14) {
+            var15 = var4 + this.rand.nextInt(16) + 8;
+            var16 = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(112) + 8) + 8);
+            var17 = var5 + this.rand.nextInt(16) + 8;
+            //(new WorldGenLiquids(Block.lavaMoving.blockID)).generate(this.worldObj, this.rand, var15, var16, var17);
+        }
+
+        /*for(var14 = var4 + 8; var14 < var4 + 8 + 16; ++var14) {
+            for(var15 = var5 + 8; var15 < var5 + 8 + 16; ++var15) {
+                var16 = this.worldObj.getTopSolidOrLiquidBlock(var14, var15);
+                BlockPos pos = new BlockPos(var14, var16, var15);
+                if(MinecraftAlpha.winterMode && var16 > 0 && var16 < 128 && chunk.getBlockState(pos).isAir() && chunk.getBlockState(pos.down()).isSolidBlock(world, pos.down()) && !chunk.getBlockState(pos.down()).isIn(BlockTags.ICE)) {
+                    chunk.setBlockState(pos, AlphaBlocks.SNOW.getDefaultState(), false);
+                }
+            }
+        }*/
+    }
+
+    @Override
     public int getSeaLevel() {
         return 64;
     }
@@ -330,7 +498,12 @@ public class AlphaChunkGenerator extends ChunkGenerator {
 
     @Override
     public int getHeight(int x, int z, Heightmap.Type heightmap, HeightLimitView world, NoiseConfig noiseConfig) {
-        return 0;
+        /*int y = 127;
+        while (y >= 0) {
+            if (heightmap.getBlockPredicate().test(world.))
+            y--;
+        }*/
+        return 65;
     }
 
     @Override

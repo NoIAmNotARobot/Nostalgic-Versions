@@ -1,0 +1,71 @@
+{
+  "step.stone": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/stone1",
+      "nostalgic-versions:step/stone2",
+      "nostalgic-versions:step/stone3",
+      "nostalgic-versions:step/stone4"
+    ]
+  },
+  "step.wood": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/wood1",
+      "nostalgic-versions:step/wood2",
+      "nostalgic-versions:step/wood3",
+      "nostalgic-versions:step/wood4"
+    ]
+  },
+  "step.gravel": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/gravel1",
+      "nostalgic-versions:step/gravel2",
+      "nostalgic-versions:step/gravel3",
+      "nostalgic-versions:step/gravel4"
+    ]
+  },
+  "step.grass": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/grass1",
+      "nostalgic-versions:step/grass2",
+      "nostalgic-versions:step/grass3",
+      "nostalgic-versions:step/grass4"
+    ]
+  },
+  "step.cloth": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/cloth1",
+      "nostalgic-versions:step/cloth2",
+      "nostalgic-versions:step/cloth3",
+      "nostalgic-versions:step/cloth4"
+    ]
+  },
+  "step.sand": {
+    "subtitle": "subtitles.block.generic.footsteps",
+    "sounds": [
+      "nostalgic-versions:step/sand1",
+      "nostalgic-versions:step/sand2",
+      "nostalgic-versions:step/sand3",
+      "nostalgic-versions:step/sand4"
+    ]
+  },
+
+  "random.glass": {
+    "subtitle": "subtitles.block.generic.break",
+    "sounds": [
+      "nostalgic-versions:random/glass1",
+      "nostalgic-versions:random/glass2",
+      "nostalgic-versions:random/glass3"
+    ]
+  },
+  "random.bow": {
+    "subtitle": "subtitles.entity.arrow.shoot",
+    "sounds": [
+      "nostalgic-versions:random/bow"
+    ]
+  }
+}
