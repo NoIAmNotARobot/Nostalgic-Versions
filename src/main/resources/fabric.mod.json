@@ -12,13 +12,13 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-          "net.noiamnotarobot.NostalgicVersions"
+          "net.noiamnotarobot.nostalgicversions.NostalgicVersions"
 		],
         "client": [
-          "net.noiamnotarobot.client.NostalgicVersionsClient"
+          "net.noiamnotarobot.nostalgicversions.client.NostalgicVersionsClient"
         ],
 		"fabric-datagen": [
-          "net.noiamnotarobot.NostalgicVersionsDataGenerator"
+          "net.noiamnotarobot.nostalgicversions.NostalgicVersionsDataGenerator"
 		]
 	},
 	"mixins": [
