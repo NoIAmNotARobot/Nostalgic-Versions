@@ -17,8 +17,11 @@ public class NostalgicVersionsClient implements ClientModInitializer {
                 AlphaBlocks.PLANT_YELLOW,
                 AlphaBlocks.PLANT_RED,
                 AlphaBlocks.MUSHROOM_BROWN,
-                AlphaBlocks.MUSHROOM_RED
+                AlphaBlocks.MUSHROOM_RED,
+                AlphaBlocks.MOB_SPAWNER,
+                AlphaBlocks.CROPS
         );
+        BlockRenderLayerMap.INSTANCE.putBlock(AlphaBlocks.ICE, RenderLayer.getTranslucent());
         HudRenderCallback.EVENT.register(new FalseVersionOverlay());
     }
 }

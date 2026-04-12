@@ -22,7 +22,7 @@ public class AlphaSounds {
     public static void init() {}
 
     public static SoundEvent register(String name) {
-        Identifier id = NostalgicVersions.id(name);
+        Identifier id = NostalgicVersions.Util.id(name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 }

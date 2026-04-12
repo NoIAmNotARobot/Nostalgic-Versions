@@ -16,7 +16,7 @@ public class FalseVersionOverlay implements HudRenderCallback {
                 && !client.options.debugEnabled
                 && Objects.equals(
                 client.player.getEntityWorld().getRegistryKey().getValue().toString(),
-                NostalgicVersions.id("alpha_dim").toString())
+                NostalgicVersions.Util.id("alpha_dim").toString())
         ) {
             drawContext.drawText(client.textRenderer, "Minecraft Alpha 1.1.2_01", 2, 2, 16777215, true);
         }

@@ -18,38 +18,34 @@ public class AlphaFlowerBlock extends Block {
         super(settings);
     }
 
-    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return canThisPlantGrowOnThisBlockID(world.getBlockState(pos.down()));
+        return canThisPlantGrowOnThisBlock(world.getBlockState(pos.down()));
     }
 
-    protected boolean canThisPlantGrowOnThisBlockID(BlockState floor) {
+    public boolean canThisPlantGrowOnThisBlock(BlockState floor) {
         return floor.isIn(BlockTags.DIRT) || floor.isOf(AlphaBlocks.TILLED_FIELD);
     }
 
-    @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         checkFlowerChange(world, pos);
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 
-    @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random) {
         checkFlowerChange(world, pos);
     }
 
     protected final void checkFlowerChange(World world, BlockPos pos) {
-        if(!this.canBlockStay(world, pos)) {
+        if (!canBlockStay(world, pos)) {
             dropStacks(world.getBlockState(pos), world, pos);
             world.removeBlock(pos, false);
         }
     }
 
     public boolean canBlockStay(WorldAccess world, BlockPos pos) {
-        return (world.getLightLevel(pos) >= 8 || world.isSkyVisible(pos)) && this.canThisPlantGrowOnThisBlockID(world.getBlockState(pos.down()));
+        return (world.getLightLevel(pos) >= 8 || world.isSkyVisible(pos)) && canThisPlantGrowOnThisBlock(world.getBlockState(pos.down()));
     }
 
-    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return VoxelShapes.cuboid(0.3F, 0.0F, 0.3F, 0.7F, 0.6F, 0.7F);
     }

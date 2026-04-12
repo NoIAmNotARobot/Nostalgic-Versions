@@ -35,7 +35,7 @@ public class AlphaLeavesBlock extends Block {
     public void updateConnectedLeaves(WorldAccess world, BlockPos pos, int var5) {
         if (world.getBlockState(pos).getBlock() == AlphaBlocks.LEAVES) {
             int var6 = world.getBlockState(pos).get(DISTANCE);
-            if(var6 != 0 && var6 == var5 - 1) {
+            if (var6 != 0 && var6 == var5 - 1) {
                 this.updateCurrentLeaves(world, pos);
             }
         }
@@ -45,7 +45,7 @@ public class AlphaLeavesBlock extends Block {
         if (this.decayCounter++ < 100) {
             int var5 = world.getBlockState(pos.down()).isSolid() ? 16 : 0;
             int var6 = world.getBlockState(pos).get(DISTANCE);
-            if(var6 == 0) {
+            if (var6 == 0) {
                 var6 = 1;
                 world.setBlockState(pos, world.getBlockState(pos).with(DISTANCE, 1), 3);
             }
@@ -56,11 +56,11 @@ public class AlphaLeavesBlock extends Block {
             var5 = this.getConnectionStrength(world, pos.west(), var5);
             var5 = this.getConnectionStrength(world, pos.east(), var5);
             int var7 = var5 - 1;
-            if(var7 < 10) {
+            if (var7 < 10) {
                 var7 = 1;
             }
 
-            if(var7 != var6) {
+            if (var7 != var6) {
                 world.setBlockState(pos, world.getBlockState(pos).with(DISTANCE, var7), 3);
                 this.updateConnectedLeaves(world, pos.down(), var6);
                 this.updateConnectedLeaves(world, pos.up(), var6);
@@ -75,12 +75,12 @@ public class AlphaLeavesBlock extends Block {
 
     private int getConnectionStrength(WorldAccess world, BlockPos pos, int var5) {
         Block var6 = world.getBlockState(pos).getBlock();
-        if(var6 == AlphaBlocks.WOOD) {
+        if (var6 == AlphaBlocks.WOOD) {
             return 16;
         } else {
-            if(var6 == AlphaBlocks.LEAVES) {
+            if (var6 == AlphaBlocks.LEAVES) {
                 int var7 = world.getBlockState(pos).get(DISTANCE);
-                if(var7 != 0 && var7 > var5) {
+                if (var7 != 0 && var7 > var5) {
                     return var7;
                 }
             }
@@ -92,12 +92,12 @@ public class AlphaLeavesBlock extends Block {
     @Override
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
         int var6 = world.getBlockState(pos).get(DISTANCE);
-        if(var6 == 0) {
+        if (var6 == 0) {
             this.decayCounter = 0;
             this.updateCurrentLeaves(world, pos);
-        } else if(var6 == 1) {
+        } else if (var6 == 1) {
             this.removeLeaves(world, pos);
-        } else if(rand.nextInt(10) == 0) {
+        } else if (rand.nextInt(10) == 0) {
             this.updateCurrentLeaves(world, pos);
         }
     }

@@ -2,17 +2,20 @@ package net.noiamnotarobot.nostalgicversions.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.registry.FuelRegistry;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.noiamnotarobot.nostalgicversions.NostalgicVersions;
 import net.noiamnotarobot.nostalgicversions.block.AlphaBlocks;
+import net.noiamnotarobot.nostalgicversions.item.teleporter.TeleporterAlphaItem;
+import net.noiamnotarobot.nostalgicversions.item.teleporter.TeleporterModernItem;
 
 public class AlphaItems {
-    public static final Item SHOVEL = Items.IRON_SHOVEL;
-    public static final Item PICKAXE_STEEL = Items.IRON_PICKAXE;
-    public static final Item AXE_STEEL = Items.IRON_AXE;
+    public static final Item SHOVEL = register("shovel", new ShovelItem(ToolMaterials.IRON, 1, 0, new Item.Settings()));
+    public static final Item PICKAXE_STEEL = register("pickaxe_steel", new PickaxeItem(ToolMaterials.IRON, 2, 0, new Item.Settings()));
+    public static final Item AXE_STEEL = register("axe_steel", new AxeItem(ToolMaterials.IRON, 3, 0, new Item.Settings()));
     public static final Item STRIKER = register("striker", new AlphaFlintAndSteelItem(new Item.Settings().maxCount(1).maxDamage(64)));
     public static final Item APPLE_RED = register("apple_red", new AlphaFoodItem(new Item.Settings().maxCount(1), 4));
     public static final Item BOW = register("bow", new AlphaBowItem(new Item.Settings().maxCount(1)));
@@ -23,17 +26,17 @@ public class AlphaItems {
     public static final Item INGOT_GOLD = register("ingot_gold", new Item(new Item.Settings()));
     public static final Item SWORD_STEEL = Items.IRON_SWORD;
     public static final Item SWORD_WOOD = Items.WOODEN_SWORD;
-    public static final Item SHOVEL_WOOD = Items.WOODEN_SHOVEL;
-    public static final Item PICKAXE_WOOD = Items.WOODEN_PICKAXE;
-    public static final Item AXE_WOOD = Items.WOODEN_AXE;
+    public static final Item SHOVEL_WOOD = register("shovel_wood", new ShovelItem(ToolMaterials.WOOD, 1, 0, new Item.Settings()));
+    public static final Item PICKAXE_WOOD = register("pickaxe_wood", new PickaxeItem(ToolMaterials.WOOD, 2, 0, new Item.Settings()));
+    public static final Item AXE_WOOD = register("axe_wood", new AxeItem(ToolMaterials.WOOD, 3, 0, new Item.Settings()));
     public static final Item SWORD_STONE = Items.STONE_SWORD;
-    public static final Item SHOVEL_STONE = Items.STONE_SHOVEL;
-    public static final Item PICKAXE_STONE = Items.STONE_PICKAXE;
-    public static final Item AXE_STONE = Items.STONE_AXE;
+    public static final Item SHOVEL_STONE = register("shovel_stone", new ShovelItem(ToolMaterials.STONE, 1, 0, new Item.Settings()));
+    public static final Item PICKAXE_STONE = register("pickaxe_stone", new PickaxeItem(ToolMaterials.STONE, 2, 0, new Item.Settings()));
+    public static final Item AXE_STONE = register("axe_stone", new AxeItem(ToolMaterials.STONE, 3, 0, new Item.Settings()));
     public static final Item SWORD_DIAMOND = Items.DIAMOND_SWORD;
-    public static final Item SHOVEL_DIAMOND = Items.DIAMOND_SHOVEL;
-    public static final Item PICKAXE_DIAMOND = Items.DIAMOND_PICKAXE;
-    public static final Item AXE_DIAMOND = Items.DIAMOND_AXE;
+    public static final Item SHOVEL_DIAMOND = register("shovel_diamond", new ShovelItem(ToolMaterials.DIAMOND, 1, 0, new Item.Settings()));
+    public static final Item PICKAXE_DIAMOND = register("pickaxe_diamond", new PickaxeItem(ToolMaterials.DIAMOND, 2, 0, new Item.Settings()));
+    public static final Item AXE_DIAMOND = register("axe_diamond", new AxeItem(ToolMaterials.DIAMOND, 3, 0, new Item.Settings()));
     public static final Item STICK = register("stick", new Item(new Item.Settings()), 100);
     public static final Item BOWL_EMPTY = register("bowl_empty", new Item(new Item.Settings()));
     public static final Item BOWL_SOUP = register("bowl_soup", new AlphaSoupItem(new Item.Settings().maxCount(1), 10));
@@ -49,7 +52,7 @@ public class AlphaItems {
     public static final Item HOE_STEEL = Items.IRON_HOE;
     public static final Item HOE_DIAMOND = Items.DIAMOND_HOE;
     public static final Item HOE_GOLD = Items.GOLDEN_HOE;
-    public static final Item SEEDS = Items.WHEAT_SEEDS;
+    public static final Item SEEDS = register("seeds", new AlphaSeedsItem(new Item.Settings()));
     public static final Item WHEAT = register("wheat", new Item(new Item.Settings()));
     public static final Item BREAD = register("bread", new AlphaFoodItem(new Item.Settings().maxCount(1), 5));
     public static final Item HELMET_LEATHER = Items.LEATHER_HELMET;
@@ -79,9 +82,9 @@ public class AlphaItems {
     public static final Item APPLE_GOLD = register("apple_gold", new AlphaFoodItem(new Item.Settings().maxCount(1), 42));
     public static final Item SIGN = Items.OAK_SIGN;
     public static final Item DOOR_WOOD = Items.OAK_DOOR;
-    public static final Item BUCKET_EMPTY = Items.BUCKET;
-    public static final Item BUCKET_WATER = Items.WATER_BUCKET;
-    public static final Item BUCKET_LAVA = Items.LAVA_BUCKET;
+    public static final Item BUCKET_EMPTY = register("bucket_empty", new AlphaBucketItem(new Item.Settings().maxCount(1).maxDamage(64), Blocks.AIR));
+    public static final Item BUCKET_WATER = register("bucket_water", new AlphaBucketItem(new Item.Settings().maxCount(1).maxDamage(64), Blocks.WATER));
+    public static final Item BUCKET_LAVA = register("bucket_lava", new AlphaBucketItem(new Item.Settings().maxCount(1).maxDamage(64), Blocks.LAVA));
     public static final Item MINECART_EMPTY = Items.MINECART;
     public static final Item SADDLE = Items.SADDLE;
     public static final Item DOOR_STEEL = Items.IRON_DOOR;
@@ -89,7 +92,7 @@ public class AlphaItems {
     public static final Item SNOWBALL = Items.SNOWBALL;
     public static final Item BOAT = Items.OAK_BOAT;
     public static final Item LEATHER = register("leather", new Item(new Item.Settings()));
-    public static final Item BUCKET_MILK = Items.MILK_BUCKET;
+    public static final Item BUCKET_MILK = register("bucket_milk", new AlphaBucketItem(new Item.Settings().maxCount(1).maxDamage(64), null));
     public static final Item BRICK = register("brick", new Item(new Item.Settings()));
     public static final Item CLAY = register("clay", new Item(new Item.Settings()));
     public static final Item REED = Items.SUGAR_CANE;
@@ -103,10 +106,12 @@ public class AlphaItems {
     public static final Item FISHING_ROD = register("fishing_rod", new Item(new Item.Settings()));
     public static final Item RECORD_13 = Items.MUSIC_DISC_13;
     public static final Item RECORD_CAT = Items.MUSIC_DISC_CAT;
+    public static final Item TELEPORTER_ALPHA = register("teleporter_alpha", new TeleporterAlphaItem(new Item.Settings().maxCount(1)));
+    public static final Item TELEPORTER_MODERN = register("teleporter_modern", new TeleporterModernItem(new Item.Settings().maxCount(1)));
 
     public static final ItemGroup ALPHA_GROUP = FabricItemGroup.builder()
             .icon(() -> new ItemStack(AlphaBlocks.GRASS))
-            .displayName(Text.translatable("itemGroup.minecraft-alpha.alpha_items"))
+            .displayName(Text.translatable(NostalgicVersions.TranslationKeys.ALPHA_ITEMS))
             .entries(((context, entries) -> {
                 entries.add(AlphaBlocks.STONE);
                 entries.add(AlphaBlocks.GRASS);
@@ -138,13 +143,14 @@ public class AlphaItems {
                 entries.add(AlphaBlocks.COBBLESTONE_MOSSY);
                 entries.add(AlphaBlocks.OBSIDIAN);
                 entries.add(AlphaBlocks.TORCH);
-                //entries.add(AlphaBlocks.FIRE);
+                entries.add(AlphaBlocks.FIRE);
                 entries.add(AlphaBlocks.MOB_SPAWNER);
                 entries.add(AlphaBlocks.STAIR_COMPACT_WOOD);
                 entries.add(AlphaBlocks.CHEST);
                 entries.add(AlphaBlocks.ORE_DIAMOND);
                 entries.add(AlphaBlocks.BLOCK_DIAMOND);
                 entries.add(AlphaBlocks.WORKBENCH);
+                entries.add(AlphaBlocks.TILLED_FIELD);
                 entries.add(AlphaBlocks.STONE_OVEN_IDLE);
                 entries.add(AlphaBlocks.LADDER);
                 entries.add(AlphaBlocks.MINECART_TRACK);
@@ -256,15 +262,17 @@ public class AlphaItems {
                 entries.add(FISHING_ROD);
                 entries.add(RECORD_13);
                 entries.add(RECORD_CAT);
+                entries.add(TELEPORTER_ALPHA);
+                entries.add(TELEPORTER_MODERN);
             }))
             .build();
 
     public static void init() {
-        Registry.register(Registries.ITEM_GROUP, NostalgicVersions.id("alpha_items"), ALPHA_GROUP);
+        Registry.register(Registries.ITEM_GROUP, NostalgicVersions.Util.id("alpha_items"), ALPHA_GROUP);
     }
 
     public static Item register(String name, Item item) {
-        return Registry.register(Registries.ITEM, NostalgicVersions.id(name), item);
+        return Registry.register(Registries.ITEM, NostalgicVersions.Util.id(name), item);
     }
 
     public static Item register(String name, Item item, int fuelTime) {

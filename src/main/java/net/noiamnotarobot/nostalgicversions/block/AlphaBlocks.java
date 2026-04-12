@@ -80,10 +80,6 @@ public class AlphaBlocks {
                     .allowsSpawning(Blocks::never)),
             true
     );
-    public static final Block WATER_MOVING = Blocks.WATER;
-    public static final Block WATER_STILL = Blocks.WATER;
-    public static final Block LAVA_MOVING = Blocks.LAVA;
-    public static final Block LAVA_STILL = Blocks.LAVA;
     public static final Block SAND = register(
             "sand",
             new SandBlock(14406560, AbstractBlock.Settings.create()
@@ -242,8 +238,26 @@ public class AlphaBlocks {
                     .pistonBehavior(PistonBehavior.DESTROY)),
             true
     );
-    public static final Block BLOCK_GOLD = Blocks.GOLD_BLOCK;
-    public static final Block BLOCK_STEEL = Blocks.IRON_BLOCK;
+    public static final Block BLOCK_GOLD = register(
+            "block_gold",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(3.0F, 10.0F)
+                    .sounds(AlphaBlockSoundGroups.METAL)
+                    .mapColor(MapColor.GOLD)
+                    .instrument(Instrument.BELL)
+                    .requiresTool()),
+            true
+    );
+    public static final Block BLOCK_STEEL = register(
+            "block_steel",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(5.0F, 10.0F)
+                    .sounds(AlphaBlockSoundGroups.METAL)
+                    .mapColor(MapColor.IRON_GRAY)
+                    .instrument(Instrument.IRON_XYLOPHONE)
+                    .requiresTool()),
+            true
+    );
     public static final Block STAIR_DOUBLE = Blocks.SMOOTH_STONE_SLAB;
     public static final Block STAIR_SINGLE = Blocks.SMOOTH_STONE_SLAB;
     public static final Block BRICK = register(
@@ -288,8 +302,32 @@ public class AlphaBlocks {
             true
     );
     public static final Block TORCH = Blocks.TORCH;
-    public static final Block FIRE = Blocks.FIRE; //make type be AlphaBlockFire
-    public static final Block MOB_SPAWNER = Blocks.SPAWNER;
+    public static final AlphaFireBlock FIRE = (AlphaFireBlock) register(
+            "fire",
+            new AlphaFireBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .luminance((state) -> 15)
+                    .sounds(AlphaBlockSoundGroups.WOOD)
+                    .nonOpaque()
+                    .ticksRandomly()
+                    .mapColor(MapColor.BRIGHT_RED)
+                    .replaceable()
+                    .noCollision()
+                    .breakInstantly()
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final Block MOB_SPAWNER = register(
+            "mob_spawner",
+            new AlphaMobSpawnerBlock(AbstractBlock.Settings.create()
+                    .hardness(5.0F)
+                    .sounds(AlphaBlockSoundGroups.METAL)
+                    .nonOpaque()
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
     public static final Block STAIR_COMPACT_WOOD = Blocks.OAK_STAIRS;
     public static final Block CHEST = register(
             "chest",
@@ -301,11 +339,58 @@ public class AlphaBlocks {
             true
     );
     public static final Block REDSTONE_WIRE = Blocks.REDSTONE_WIRE;
-    public static final Block ORE_DIAMOND = Blocks.DIAMOND_ORE;
-    public static final Block BLOCK_DIAMOND = Blocks.DIAMOND_BLOCK;
-    public static final Block WORKBENCH = Blocks.CRAFTING_TABLE;
-    public static final Block CROPS = Blocks.WHEAT;
-    public static final Block TILLED_FIELD = Blocks.FARMLAND;
+    public static final Block ORE_DIAMOND = register(
+            "ore_diamond",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()),
+            true
+    );
+    public static final Block BLOCK_DIAMOND = register(
+            "block_diamond",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(5.0F, 10.0F)
+                    .sounds(AlphaBlockSoundGroups.METAL)
+                    .mapColor(MapColor.DIAMOND_BLUE)
+                    .requiresTool()),
+            true
+    );
+    public static final Block WORKBENCH = register(
+            "workbench",
+            new AlphaWorkbenchBlock(AbstractBlock.Settings.create()
+                    .hardness(2.5F)
+                    .sounds(AlphaBlockSoundGroups.WOOD)
+                    .mapColor(MapColor.OAK_TAN)
+                    .instrument(Instrument.BASS)),
+            true
+    );
+    public static final Block CROPS = register(
+            "crops",
+            new AlphaCropsBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .mapColor(MapColor.DARK_GREEN)
+                    .noCollision()
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final Block TILLED_FIELD = register(
+            "tilled_field",
+            new AlphaFarmlandBlock(AbstractBlock.Settings.create()
+                    .hardness(0.6F)
+                    .sounds(AlphaBlockSoundGroups.GRAVEL)
+                    .ticksRandomly()
+                    .nonOpaque()
+                    .mapColor(MapColor.DIRT_BROWN)
+                    .blockVision(Blocks::always)
+                    .suffocates(Blocks::always)),
+            true
+    );
     public static final Block STONE_OVEN_IDLE = Blocks.FURNACE;
     public static final Block STONE_OVEN_ACTIVE = Blocks.FURNACE;
     public static final Block SIGN_STANDING = Blocks.OAK_SIGN;
@@ -323,11 +408,53 @@ public class AlphaBlocks {
     public static final Block TORCH_REDSTONE_IDLE = Blocks.REDSTONE_TORCH;
     public static final Block TORCH_REDSTONE_ACTIVE = Blocks.REDSTONE_TORCH;
     public static final Block BUTTON = Blocks.STONE_BUTTON;
-    public static final Block SNOW = Blocks.SNOW;
-    public static final Block ICE = Blocks.ICE;
-    public static final Block BLOCK_SNOW = Blocks.SNOW_BLOCK;
+    public static final Block SNOW = register(
+            "snow",
+            new AlphaSnowBlock(AbstractBlock.Settings.create()
+                    .hardness(0.1F)
+                    .sounds(AlphaBlockSoundGroups.CLOTH)
+                    .noCollision()
+                    .nonOpaque()
+                    .requiresTool()
+                    .mapColor(MapColor.WHITE)
+                    .replaceable()
+                    .ticksRandomly()
+                    .blockVision(Blocks::never)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            true
+    );
+    public static final Block ICE = register(
+            "ice",
+            new AlphaIceBlock(AbstractBlock.Settings.create()
+                    .hardness(0.5F)
+                    .slipperiness(0.98F)
+                    .sounds(AlphaBlockSoundGroups.GLASS)
+                    .mapColor(MapColor.PALE_PURPLE)
+                    .nonOpaque().allowsSpawning(Blocks::never)
+                    .solidBlock(Blocks::never)
+                    .ticksRandomly()),
+            true
+    );
+    public static final Block BLOCK_SNOW = register(
+            "block_snow",
+            new AlphaSnowBlockBlock(AbstractBlock.Settings.create()
+                    .hardness(0.2F)
+                    .sounds(AlphaBlockSoundGroups.CLOTH)
+                    .mapColor(MapColor.WHITE)
+                    .requiresTool()
+                    .ticksRandomly()),
+            true
+    );
     public static final Block CACTUS = Blocks.CACTUS;
-    public static final Block BLOCK_CLAY = Blocks.CLAY;
+    public static final Block BLOCK_CLAY = register(
+            "block_clay",
+            new Block(AbstractBlock.Settings.create()
+                    .hardness(0.6F)
+                    .sounds(AlphaBlockSoundGroups.GRAVEL)
+                    .mapColor(MapColor.LIGHT_BLUE_GRAY)
+                    .instrument(Instrument.FLUTE)),
+            true
+    );
     public static final Block REED = Blocks.SUGAR_CANE;
     public static final Block JUKEBOX = Blocks.JUKEBOX;
     public static final Block FENCE = Blocks.OAK_FENCE;
@@ -337,6 +464,6 @@ public class AlphaBlocks {
 
     private static Block register(String name, Block block, boolean makeBlockItem) {
         if (makeBlockItem) AlphaItems.register(name, new BlockItem(block, new Item.Settings()));
-        return Registry.register(Registries.BLOCK, NostalgicVersions.id(name), block);
+        return Registry.register(Registries.BLOCK, NostalgicVersions.Util.id(name), block);
     }
 }
