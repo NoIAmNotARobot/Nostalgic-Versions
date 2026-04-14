@@ -44,7 +44,7 @@ public class AlphaChunkGenerator extends ChunkGenerator {
     private double[] sandNoise = new double[256];
     private double[] gravelNoise = new double[256];
     private double[] stoneNoise = new double[256];
-    private AlphaMapGenCaves caveGenerator = new AlphaMapGenCaves();
+    private final AlphaMapGenCaves caveGenerator = new AlphaMapGenCaves();
     double[] noise3;
     double[] noise1;
     double[] noise2;
@@ -453,28 +453,28 @@ public class AlphaChunkGenerator extends ChunkGenerator {
             var15 = baseX + rand.nextInt(16) + 8;
             var16 = rand.nextInt(128);
             var17 = baseZ + rand.nextInt(16) + 8;
-            //(new WorldGenReed()).generate(worldObj, rand, var15, var16, var17);
+            (new AlphaWorldGenReed()).generate(world, rand, new BlockPos(var15, var16, var17));
         }
 
         for (var14 = 0; var14 < 1; ++var14) {
             var15 = baseX + rand.nextInt(16) + 8;
             var16 = rand.nextInt(128);
             var17 = baseZ + rand.nextInt(16) + 8;
-            //(new WorldGenCactus()).generate(worldObj, rand, var15, var16, var17);
+            //(new AlphaWorldGenCactus()).generate(world, rand, new BlockPos(var15, var16, var17));
         }
 
         for (var14 = 0; var14 < 50; ++var14) {
             var15 = baseX + rand.nextInt(16) + 8;
             var16 = rand.nextInt(rand.nextInt(120) + 8);
             var17 = baseZ + rand.nextInt(16) + 8;
-            //(new WorldGenLiquids(Block.waterMoving.blockID)).generate(worldObj, rand, var15, var16, var17);
+            (new AlphaWorldGenLiquids(Blocks.WATER)).generate(world, rand, new BlockPos(var15, var16, var17));
         }
 
         for (var14 = 0; var14 < 20; ++var14) {
             var15 = baseX + rand.nextInt(16) + 8;
             var16 = rand.nextInt(rand.nextInt(rand.nextInt(112) + 8) + 8);
             var17 = baseZ + rand.nextInt(16) + 8;
-            //(new WorldGenLiquids(Block.lavaMoving.blockID)).generate(worldObj, rand, var15, var16, var17);
+            (new AlphaWorldGenLiquids(Blocks.LAVA)).generate(world, rand, new BlockPos(var15, var16, var17));
         }
 
         for (var14 = baseX; var14 < baseX + 16; ++var14) {

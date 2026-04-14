@@ -37,7 +37,6 @@ public class WinterModeState extends PersistentState {
 
     public static WinterModeState getServerState(MinecraftServer server) {
         ServerWorld world = server.getWorld(NostalgicVersions.ALPHA_DIM);
-        NostalgicVersions.LOGGER.info("h");
         return world.getPersistentStateManager().getOrCreate(WinterModeState::readNbt, () -> new WinterModeState(System.currentTimeMillis() % 4 == 0), "winterMode").withDirty();
     }
 }

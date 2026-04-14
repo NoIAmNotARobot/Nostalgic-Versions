@@ -8,8 +8,7 @@ import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.noiamnotarobot.nostalgicversions.NostalgicVersions;
-import net.noiamnotarobot.nostalgicversions.client.AlphaWorkbenchScreenHandler;
+import net.noiamnotarobot.nostalgicversions.AlphaWorkbenchScreenHandler;
 
 public class AlphaWorkbenchBlock extends CraftingTableBlock {
     public AlphaWorkbenchBlock(Settings settings) {
@@ -19,6 +18,6 @@ public class AlphaWorkbenchBlock extends CraftingTableBlock {
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) ->
                 new AlphaWorkbenchScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)),
-                Text.translatable(NostalgicVersions.TranslationKeys.WORKBENCH_NAME));
+                Text.translatable("container.crafting"));
     }
 }

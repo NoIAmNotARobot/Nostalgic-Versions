@@ -1,13 +1,13 @@
 package net.noiamnotarobot.nostalgicversions.mixin.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.WorldRenderer;
+import net.minecraft.client.render.*;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.SynchronousResourceReloader;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.noiamnotarobot.nostalgicversions.NostalgicVersions;
@@ -37,8 +37,8 @@ public abstract class WorldRendererMixin implements SynchronousResourceReloader,
 
     @Inject(method = "renderSky(Lnet/minecraft/client/util/math/MatrixStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/render/Camera;ZLjava/lang/Runnable;)V", at = @At("HEAD"), cancellable = true)
     private void renderAlphaDimSky(MatrixStack matrices, Matrix4f projectionMatrix, float tickDelta, Camera camera, boolean thickFog, Runnable fogCallback, CallbackInfo ci) {
-        if (client.world == null || client.world.getRegistryKey() != NostalgicVersions.ALPHA_DIM) return;
-        /*GL11.glDisable(GL11.GL_TEXTURE_2D);
+        /*if (client.world == null || client.world.getRegistryKey() != NostalgicVersions.ALPHA_DIM) return;
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
         Vec3d var2 = getSkyColor(tickDelta);
         float var3 = (float)var2.x;
         float var4 = (float)var2.y;
@@ -47,7 +47,7 @@ public abstract class WorldRendererMixin implements SynchronousResourceReloader,
         float var8;
 
         GL11.glColor3f(var3, var4, var5);
-        Tessellator var12 = Tessellator.getInstance();
+        BufferBuilder var12 = Tessellator.getInstance().getBuffer();
         GL11.glDepthMask(false);
         GL11.glEnable(GL11.GL_FOG);
         GL11.glColor3f(var3, var4, var5);
@@ -66,13 +66,13 @@ public abstract class WorldRendererMixin implements SynchronousResourceReloader,
         GL11.glRotatef(0.0F, 0.0F, 0.0F, 1.0F);
         GL11.glRotatef(getCelestialAngle(tickDelta) * 360.0F, 1.0F, 0.0F, 0.0F);
         float var10 = 30.0F;
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain/sun.png"));
-        var12.startDrawingQuads();
-        var12.addVertexWithUV((double)(-var10), 100.0D, (double)(-var10), 0.0D, 0.0D);
-        var12.addVertexWithUV((double)var10, 100.0D, (double)(-var10), 1.0D, 0.0D);
-        var12.addVertexWithUV((double)var10, 100.0D, (double)var10, 1.0D, 1.0D);
-        var12.addVertexWithUV((double)(-var10), 100.0D, (double)var10, 0.0D, 1.0D);
-        var12.draw();
+        RenderSystem.setShaderTexture(0, new Identifier("textures/environment/sun.png"));
+        var12.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_TEXTURE);
+        var12.vertex(-var10, 100.0D, -var10).light(0, 0).next();
+        var12.vertex(var10, 100.0D, -var10).light(1, 0).next();
+        var12.vertex(var10, 100.0D, var10).light(1, 1).next();
+        var12.vertex(-var10, 100.0D, var10).light(0, 1).next();
+        var12.end();
         var10 = 20.0F;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain/moon.png"));
         var12.startDrawingQuads();
@@ -80,7 +80,7 @@ public abstract class WorldRendererMixin implements SynchronousResourceReloader,
         var12.addVertexWithUV((double)var10, -100.0D, (double)var10, 0.0D, 1.0D);
         var12.addVertexWithUV((double)var10, -100.0D, (double)(-var10), 0.0D, 0.0D);
         var12.addVertexWithUV((double)(-var10), -100.0D, (double)(-var10), 1.0D, 0.0D);
-        var12.draw();
+        var12.end();
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         float var11 = getStarBrightness(tickDelta);
         if(var11 > 0.0F) {
@@ -97,8 +97,8 @@ public abstract class WorldRendererMixin implements SynchronousResourceReloader,
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glCallList(this.glSkyList2);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDepthMask(true);*/
-        ci.cancel();
+        GL11.glDepthMask(true);
+        ci.cancel();*/
     }
 
     @Unique

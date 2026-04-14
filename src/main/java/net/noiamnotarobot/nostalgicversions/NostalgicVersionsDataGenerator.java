@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.*;
 import net.minecraft.advancement.criterion.ImpossibleCriterion;
 import net.minecraft.block.enums.ChestType;
 import net.minecraft.data.client.*;
+import net.minecraft.data.server.recipe.CookingRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
@@ -15,11 +16,14 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.BlockStatePropertyLootCondition;
+import net.minecraft.loot.condition.EntityPropertiesLootCondition;
+import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.entry.EmptyEntry;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.predicate.StatePredicate;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.tag.BlockTags;
@@ -38,6 +42,7 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(NostalgicVersionsBlockLootTableProvider::new);
         pack.addProvider(NostalgicVersionsEnglishLangProvider::new);
         pack.addProvider(NostalgicVersionsBlockTagProvider::new);
+        pack.addProvider(NostalgicVersionsItemTagProvider::new);
         pack.addProvider(NostalgicVersionsRecipeProvider::new);
     }
 
@@ -159,10 +164,14 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
                             )
             );
             // TILLED FIELD END
+            generator.registerSimpleCubeAll(AlphaBlocks.ORE_REDSTONE);
+            generator.registerSingleton(AlphaBlocks.ORE_REDSTONE_GLOWING, TextureMap.all(AlphaBlocks.ORE_REDSTONE), Models.CUBE_ALL);
+            generator.registerSimpleState(AlphaBlocks.SNOW);
             generator.registerSimpleCubeAll(AlphaBlocks.ICE);
             generator.registerParentedItemModel(AlphaBlocks.BLOCK_SNOW, Models.CUBE_ALL.upload(AlphaBlocks.BLOCK_SNOW, TextureMap.all(AlphaBlocks.SNOW), generator.modelCollector));
             generator.registerSimpleState(AlphaBlocks.BLOCK_SNOW);
             generator.registerSimpleCubeAll(AlphaBlocks.BLOCK_CLAY);
+            generator.registerTintableCross(AlphaBlocks.REED, BlockStateModelGenerator.TintType.NOT_TINTED);
         }
 
         @Override
@@ -345,6 +354,11 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
             addDrop(AlphaBlocks.TORCH_REDSTONE_IDLE, AlphaBlocks.TORCH_REDSTONE_ACTIVE);
             addDrop(AlphaBlocks.TORCH_REDSTONE_ACTIVE);
             addDrop(AlphaBlocks.BUTTON);
+            addDrop(AlphaBlocks.SNOW, LootTable.builder().pool(LootPool.builder()
+                    .rolls(ConstantLootNumberProvider.create(1))
+                    .with(ItemEntry.builder(AlphaItems.SNOWBALL))
+                    .conditionally(EntityPropertiesLootCondition.create(LootContext.EntityTarget.THIS))
+            ));
             addDrop(AlphaBlocks.BLOCK_SNOW, LootTable.builder().pool(LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(4))
                     .with(ItemEntry.builder(AlphaItems.SNOWBALL))
@@ -422,17 +436,17 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
             //translationBuilder.add(AlphaBlocks.PRESSURE_PLATE_STONE, "Stone Pressure Plate");
             //translationBuilder.add(AlphaBlocks.DOOR_STEEL, "Steel Door");
             //translationBuilder.add(AlphaBlocks.PRESSURE_PLATE_WOOD, "Wood Pressure Plate");
-            //translationBuilder.add(AlphaBlocks.ORE_REDSTONE, "Redstone Ore");
-            //translationBuilder.add(AlphaBlocks.ORE_REDSTONE_GLOWING, "Redstone Ore");
+            translationBuilder.add(AlphaBlocks.ORE_REDSTONE, "Redstone Ore");
+            translationBuilder.add(AlphaBlocks.ORE_REDSTONE_GLOWING, "Redstone Ore");
             //translationBuilder.add(AlphaBlocks.TORCH_REDSTONE_IDLE, "Redstone Torch");
             //translationBuilder.add(AlphaBlocks.TORCH_REDSTONE_ACTIVE, "Redstone Torch");
             //translationBuilder.add(AlphaBlocks.BUTTON, "Button");
-            //translationBuilder.add(AlphaBlocks.SNOW, "Snow");
+            translationBuilder.add(AlphaBlocks.SNOW, "Snow");
             translationBuilder.add(AlphaBlocks.ICE, "Ice");
             translationBuilder.add(AlphaBlocks.BLOCK_SNOW, "Snow");
             //translationBuilder.add(AlphaBlocks.CACTUS, "Cactus");
             translationBuilder.add(AlphaBlocks.BLOCK_CLAY, "Clay");
-            //translationBuilder.add(AlphaBlocks.REED, "Reed");
+            translationBuilder.add(AlphaBlocks.REED, "Reed");
             //translationBuilder.add(AlphaBlocks.JUKEBOX, "Jukebox");
             //translationBuilder.add(AlphaBlocks.FENCE, "Fence");
 
@@ -473,11 +487,11 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(AlphaItems.SILK, "Silk");
             translationBuilder.add(AlphaItems.FEATHER, "Feather");
             translationBuilder.add(AlphaItems.GUNPOWDER, "Gunpowder");
-            //translationBuilder.add(AlphaItems.HOE_WOOD, "Wood Hoe");
-            //translationBuilder.add(AlphaItems.HOE_STONE, "Stone Hoe");
-            //translationBuilder.add(AlphaItems.HOE_STEEL, "Steel Hoe");
-            //translationBuilder.add(AlphaItems.HOE_DIAMOND, "Diamond Hoe");
-            //translationBuilder.add(AlphaItems.HOE_GOLD, "Gold Hoe");
+            translationBuilder.add(AlphaItems.HOE_WOOD, "Wood Hoe");
+            translationBuilder.add(AlphaItems.HOE_STONE, "Stone Hoe");
+            translationBuilder.add(AlphaItems.HOE_STEEL, "Steel Hoe");
+            translationBuilder.add(AlphaItems.HOE_DIAMOND, "Diamond Hoe");
+            translationBuilder.add(AlphaItems.HOE_GOLD, "Gold Hoe");
             translationBuilder.add(AlphaItems.SEEDS, "Seeds");
             translationBuilder.add(AlphaItems.WHEAT, "Wheat");
             translationBuilder.add(AlphaItems.BREAD, "Bread");
@@ -521,7 +535,7 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
             translationBuilder.add(AlphaItems.BUCKET_MILK, "Milk Bucket");
             translationBuilder.add(AlphaItems.BRICK, "Brick");
             translationBuilder.add(AlphaItems.CLAY, "Clay");
-            //translationBuilder.add(AlphaItems.REED, "Reed");
+            translationBuilder.add(AlphaItems.REED, "Reed");
             translationBuilder.add(AlphaItems.PAPER, "Paper");
             translationBuilder.add(AlphaItems.BOOK, "Book");
             translationBuilder.add(AlphaItems.SLIME_BALL, "Slime Ball");
@@ -548,6 +562,62 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
 
         @Override
         protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+            getOrCreateTagBuilder(NostalgicVersions.ALPHA_BLOCKS)
+                    .add(AlphaBlocks.STONE)
+                    .add(AlphaBlocks.GRASS)
+                    .add(AlphaBlocks.DIRT)
+                    .add(AlphaBlocks.COBBLESTONE)
+                    .add(AlphaBlocks.PLANKS)
+                    .add(AlphaBlocks.SAPLING)
+                    .add(AlphaBlocks.BEDROCK)
+                    .add(AlphaBlocks.SAND)
+                    .add(AlphaBlocks.GRAVEL)
+                    .add(AlphaBlocks.ORE_GOLD)
+                    .add(AlphaBlocks.ORE_IRON)
+                    .add(AlphaBlocks.ORE_COAL)
+                    .add(AlphaBlocks.WOOD)
+                    .add(AlphaBlocks.LEAVES)
+                    .add(AlphaBlocks.SPONGE)
+                    .add(AlphaBlocks.GLASS)
+                    .add(AlphaBlocks.CLOTH)
+                    .add(AlphaBlocks.PLANT_YELLOW)
+                    .add(AlphaBlocks.PLANT_RED)
+                    .add(AlphaBlocks.MUSHROOM_BROWN)
+                    .add(AlphaBlocks.MUSHROOM_RED)
+                    .add(AlphaBlocks.BLOCK_GOLD)
+                    .add(AlphaBlocks.BLOCK_STEEL)
+                    .add(AlphaBlocks.STAIR_SINGLE)
+                    .add(AlphaBlocks.BRICK)
+                    .add(AlphaBlocks.TNT)
+                    .add(AlphaBlocks.BOOKSHELF)
+                    .add(AlphaBlocks.COBBLESTONE_MOSSY)
+                    .add(AlphaBlocks.OBSIDIAN)
+                    .add(AlphaBlocks.TORCH)
+                    .add(AlphaBlocks.FIRE)
+                    .add(AlphaBlocks.MOB_SPAWNER)
+                    .add(AlphaBlocks.STAIR_COMPACT_WOOD)
+                    .add(AlphaBlocks.CHEST)
+                    .add(AlphaBlocks.ORE_DIAMOND)
+                    .add(AlphaBlocks.BLOCK_DIAMOND)
+                    .add(AlphaBlocks.WORKBENCH)
+                    .add(AlphaBlocks.TILLED_FIELD)
+                    .add(AlphaBlocks.STONE_OVEN_IDLE)
+                    .add(AlphaBlocks.LADDER)
+                    .add(AlphaBlocks.MINECART_TRACK)
+                    .add(AlphaBlocks.STAIR_COMPACT_STONE)
+                    .add(AlphaBlocks.LEVER)
+                    .add(AlphaBlocks.PRESSURE_PLATE_STONE)
+                    .add(AlphaBlocks.PRESSURE_PLATE_WOOD)
+                    .add(AlphaBlocks.ORE_REDSTONE)
+                    .add(AlphaBlocks.TORCH_REDSTONE_ACTIVE)
+                    .add(AlphaBlocks.BUTTON)
+                    .add(AlphaBlocks.SNOW)
+                    .add(AlphaBlocks.ICE)
+                    .add(AlphaBlocks.BLOCK_SNOW)
+                    .add(AlphaBlocks.CACTUS)
+                    .add(AlphaBlocks.BLOCK_CLAY)
+                    .add(AlphaBlocks.JUKEBOX)
+                    .add(AlphaBlocks.FENCE);
             getOrCreateTagBuilder(BlockTags.PICKAXE_MINEABLE)
                     .add(AlphaBlocks.COBBLESTONE)
                     .add(AlphaBlocks.STAIR_DOUBLE)
@@ -595,6 +665,168 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
                     .add(AlphaBlocks.DIRT);
             getOrCreateTagBuilder(BlockTags.MAINTAINS_FARMLAND)
                     .add(AlphaBlocks.CROPS);
+            getOrCreateTagBuilder(BlockTags.SNOW)
+                    .add(AlphaBlocks.SNOW)
+                    .add(AlphaBlocks.BLOCK_SNOW);
+        }
+    }
+
+    private static class NostalgicVersionsItemTagProvider extends FabricTagProvider.ItemTagProvider {
+        public NostalgicVersionsItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+            super(output, completableFuture);
+        }
+
+        protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+            getOrCreateTagBuilder(NostalgicVersions.ALPHA_ITEMS)
+                    .add(AlphaBlocks.STONE.asItem())
+                    .add(AlphaBlocks.GRASS.asItem())
+                    .add(AlphaBlocks.DIRT.asItem())
+                    .add(AlphaBlocks.COBBLESTONE.asItem())
+                    .add(AlphaBlocks.PLANKS.asItem())
+                    .add(AlphaBlocks.SAPLING.asItem())
+                    .add(AlphaBlocks.BEDROCK.asItem())
+                    .add(AlphaBlocks.SAND.asItem())
+                    .add(AlphaBlocks.GRAVEL.asItem())
+                    .add(AlphaBlocks.ORE_GOLD.asItem())
+                    .add(AlphaBlocks.ORE_IRON.asItem())
+                    .add(AlphaBlocks.ORE_COAL.asItem())
+                    .add(AlphaBlocks.WOOD.asItem())
+                    .add(AlphaBlocks.LEAVES.asItem())
+                    .add(AlphaBlocks.SPONGE.asItem())
+                    .add(AlphaBlocks.GLASS.asItem())
+                    .add(AlphaBlocks.CLOTH.asItem())
+                    .add(AlphaBlocks.PLANT_YELLOW.asItem())
+                    .add(AlphaBlocks.PLANT_RED.asItem())
+                    .add(AlphaBlocks.MUSHROOM_BROWN.asItem())
+                    .add(AlphaBlocks.MUSHROOM_RED.asItem())
+                    .add(AlphaBlocks.BLOCK_GOLD.asItem())
+                    .add(AlphaBlocks.BLOCK_STEEL.asItem())
+                    .add(AlphaBlocks.STAIR_SINGLE.asItem())
+                    .add(AlphaBlocks.BRICK.asItem())
+                    .add(AlphaBlocks.TNT.asItem())
+                    .add(AlphaBlocks.BOOKSHELF.asItem())
+                    .add(AlphaBlocks.COBBLESTONE_MOSSY.asItem())
+                    .add(AlphaBlocks.OBSIDIAN.asItem())
+                    .add(AlphaBlocks.TORCH.asItem())
+                    .add(AlphaBlocks.FIRE.asItem())
+                    .add(AlphaBlocks.MOB_SPAWNER.asItem())
+                    .add(AlphaBlocks.STAIR_COMPACT_WOOD.asItem())
+                    .add(AlphaBlocks.CHEST.asItem())
+                    .add(AlphaBlocks.ORE_DIAMOND.asItem())
+                    .add(AlphaBlocks.BLOCK_DIAMOND.asItem())
+                    .add(AlphaBlocks.WORKBENCH.asItem())
+                    .add(AlphaBlocks.TILLED_FIELD.asItem())
+                    .add(AlphaBlocks.STONE_OVEN_IDLE.asItem())
+                    .add(AlphaBlocks.LADDER.asItem())
+                    .add(AlphaBlocks.MINECART_TRACK.asItem())
+                    .add(AlphaBlocks.STAIR_COMPACT_STONE.asItem())
+                    .add(AlphaBlocks.LEVER.asItem())
+                    .add(AlphaBlocks.PRESSURE_PLATE_STONE.asItem())
+                    .add(AlphaBlocks.PRESSURE_PLATE_WOOD.asItem())
+                    .add(AlphaBlocks.ORE_REDSTONE.asItem())
+                    .add(AlphaBlocks.TORCH_REDSTONE_ACTIVE.asItem())
+                    .add(AlphaBlocks.BUTTON.asItem())
+                    .add(AlphaBlocks.SNOW.asItem())
+                    .add(AlphaBlocks.ICE.asItem())
+                    .add(AlphaBlocks.BLOCK_SNOW.asItem())
+                    .add(AlphaBlocks.CACTUS.asItem())
+                    .add(AlphaBlocks.BLOCK_CLAY.asItem())
+                    .add(AlphaBlocks.JUKEBOX.asItem())
+                    .add(AlphaBlocks.FENCE.asItem())
+                    .add(AlphaItems.SHOVEL)
+                    .add(AlphaItems.PICKAXE_STEEL)
+                    .add(AlphaItems.AXE_STEEL)
+                    .add(AlphaItems.STRIKER)
+                    .add(AlphaItems.APPLE_RED)
+                    .add(AlphaItems.BOW)
+                    .add(AlphaItems.ARROW)
+                    .add(AlphaItems.COAL)
+                    .add(AlphaItems.DIAMOND)
+                    .add(AlphaItems.INGOT_IRON)
+                    .add(AlphaItems.INGOT_GOLD)
+                    .add(AlphaItems.SWORD_STEEL)
+                    .add(AlphaItems.SWORD_WOOD)
+                    .add(AlphaItems.SHOVEL_WOOD)
+                    .add(AlphaItems.PICKAXE_WOOD)
+                    .add(AlphaItems.AXE_WOOD)
+                    .add(AlphaItems.SWORD_STONE)
+                    .add(AlphaItems.SHOVEL_STONE)
+                    .add(AlphaItems.PICKAXE_STONE)
+                    .add(AlphaItems.AXE_STONE)
+                    .add(AlphaItems.SWORD_DIAMOND)
+                    .add(AlphaItems.SHOVEL_DIAMOND)
+                    .add(AlphaItems.PICKAXE_DIAMOND)
+                    .add(AlphaItems.AXE_DIAMOND)
+                    .add(AlphaItems.STICK)
+                    .add(AlphaItems.BOWL_EMPTY)
+                    .add(AlphaItems.BOWL_SOUP)
+                    .add(AlphaItems.SWORD_GOLD)
+                    .add(AlphaItems.SHOVEL_GOLD)
+                    .add(AlphaItems.PICKAXE_GOLD)
+                    .add(AlphaItems.AXE_GOLD)
+                    .add(AlphaItems.SILK)
+                    .add(AlphaItems.FEATHER)
+                    .add(AlphaItems.GUNPOWDER)
+                    .add(AlphaItems.HOE_WOOD)
+                    .add(AlphaItems.HOE_STONE)
+                    .add(AlphaItems.HOE_STEEL)
+                    .add(AlphaItems.HOE_DIAMOND)
+                    .add(AlphaItems.HOE_GOLD)
+                    .add(AlphaItems.SEEDS)
+                    .add(AlphaItems.WHEAT)
+                    .add(AlphaItems.BREAD)
+                    .add(AlphaItems.HELMET_LEATHER)
+                    .add(AlphaItems.PLATE_LEATHER)
+                    .add(AlphaItems.LEGS_LEATHER)
+                    .add(AlphaItems.BOOTS_LEATHER)
+                    .add(AlphaItems.HELMET_CHAIN)
+                    .add(AlphaItems.PLATE_CHAIN)
+                    .add(AlphaItems.LEGS_CHAIN)
+                    .add(AlphaItems.BOOTS_CHAIN)
+                    .add(AlphaItems.HELMET_STEEL)
+                    .add(AlphaItems.PLATE_STEEL)
+                    .add(AlphaItems.LEGS_STEEL)
+                    .add(AlphaItems.BOOTS_STEEL)
+                    .add(AlphaItems.HELMET_DIAMOND)
+                    .add(AlphaItems.PLATE_DIAMOND)
+                    .add(AlphaItems.LEGS_DIAMOND)
+                    .add(AlphaItems.BOOTS_DIAMOND)
+                    .add(AlphaItems.HELMET_GOLD)
+                    .add(AlphaItems.PLATE_GOLD)
+                    .add(AlphaItems.LEGS_GOLD)
+                    .add(AlphaItems.BOOTS_GOLD)
+                    .add(AlphaItems.FLINT)
+                    .add(AlphaItems.PORK_RAW)
+                    .add(AlphaItems.PORK_COOKED)
+                    .add(AlphaItems.PAINTING)
+                    .add(AlphaItems.APPLE_GOLD)
+                    .add(AlphaItems.SIGN)
+                    .add(AlphaItems.DOOR_WOOD)
+                    .add(AlphaItems.BUCKET_EMPTY)
+                    .add(AlphaItems.BUCKET_WATER)
+                    .add(AlphaItems.BUCKET_LAVA)
+                    .add(AlphaItems.MINECART_EMPTY)
+                    .add(AlphaItems.SADDLE)
+                    .add(AlphaItems.DOOR_STEEL)
+                    .add(AlphaItems.REDSTONE)
+                    .add(AlphaItems.SNOWBALL)
+                    .add(AlphaItems.BOAT)
+                    .add(AlphaItems.LEATHER)
+                    .add(AlphaItems.BUCKET_MILK)
+                    .add(AlphaItems.BRICK)
+                    .add(AlphaItems.CLAY)
+                    .add(AlphaItems.REED)
+                    .add(AlphaItems.PAPER)
+                    .add(AlphaItems.BOOK)
+                    .add(AlphaItems.SLIME_BALL)
+                    .add(AlphaItems.MINECART_BOX)
+                    .add(AlphaItems.MINECART_ENGINE)
+                    .add(AlphaItems.EGG)
+                    .add(AlphaItems.COMPASS)
+                    .add(AlphaItems.FISHING_ROD)
+                    .add(AlphaItems.RECORD_13)
+                    .add(AlphaItems.RECORD_CAT)
+                    .add(AlphaItems.TELEPORTER_MODERN);
         }
     }
 
@@ -1020,6 +1252,43 @@ public class NostalgicVersionsDataGenerator implements DataGeneratorEntrypoint {
             ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, AlphaBlocks.PRESSURE_PLATE_WOOD)
                     .pattern("###")
                     .input('#', AlphaBlocks.PLANKS)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer);
+
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaBlocks.ORE_IRON), RecipeCategory.MISC, AlphaItems.INGOT_IRON, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("smelting_iron_ore"));
+            CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(AlphaBlocks.ORE_IRON), RecipeCategory.MISC, AlphaItems.INGOT_IRON, 0, 100)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("blasting_iron_ore"));
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaBlocks.ORE_GOLD), RecipeCategory.MISC, AlphaItems.INGOT_GOLD, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("smelting_gold_ore"));
+            CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(AlphaBlocks.ORE_GOLD), RecipeCategory.MISC, AlphaItems.INGOT_GOLD, 0, 100)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("blasting_gold_ore"));
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaBlocks.ORE_DIAMOND), RecipeCategory.MISC, AlphaItems.DIAMOND, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("smelting_diamond_ore"));
+            CookingRecipeJsonBuilder.createBlasting(Ingredient.ofItems(AlphaBlocks.ORE_DIAMOND), RecipeCategory.MISC, AlphaItems.DIAMOND, 0, 100)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("blasting_diamond_ore"));
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaBlocks.SAND), RecipeCategory.BUILDING_BLOCKS, AlphaBlocks.GLASS, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer);
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaItems.PORK_RAW), RecipeCategory.FOOD, AlphaItems.PORK_COOKED, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("smelting_pork"));
+            CookingRecipeJsonBuilder.createCampfireCooking(Ingredient.ofItems(AlphaItems.PORK_RAW), RecipeCategory.FOOD, AlphaItems.PORK_COOKED, 0, 600)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("campfire_cooking_pork"));
+            CookingRecipeJsonBuilder.createSmoking(Ingredient.ofItems(AlphaItems.PORK_RAW), RecipeCategory.FOOD, AlphaItems.PORK_COOKED, 0, 100)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer, NostalgicVersions.Util.id("smoking_pork"));
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaBlocks.COBBLESTONE), RecipeCategory.BUILDING_BLOCKS, AlphaBlocks.STONE, 0, 200)
+                    .criterion("impossible", new ImpossibleCriterion.Conditions())
+                    .offerTo(consumer);
+            CookingRecipeJsonBuilder.createSmelting(Ingredient.ofItems(AlphaItems.CLAY), RecipeCategory.FOOD, AlphaItems.BRICK, 0, 200)
                     .criterion("impossible", new ImpossibleCriterion.Conditions())
                     .offerTo(consumer);
 

@@ -36,7 +36,6 @@ public class AlphaIceBlock extends Block {
         }
     }
 
-    @Override
     public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
         return stateFrom.isOf(this) || super.isSideInvisible(state, stateFrom, direction);
     }

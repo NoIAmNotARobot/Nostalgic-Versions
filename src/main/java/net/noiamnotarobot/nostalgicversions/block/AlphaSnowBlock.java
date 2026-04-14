@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
@@ -26,7 +27,7 @@ public class AlphaSnowBlock extends Block {
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
 
-        if (canPlaceAt(state, world, pos)) {
+        if (!canPlaceAt(state, world, pos)) {
             dropStacks(world.getBlockState(pos), world, pos);
             world.removeBlock(pos, false);
         }
@@ -41,7 +42,11 @@ public class AlphaSnowBlock extends Block {
         }
     }
 
-    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return VoxelShapes.empty();
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
+    }
+
+    public boolean isSideInvisible(BlockState state, BlockState stateFrom, Direction direction) {
+        return (stateFrom.isOf(this) && direction.getHorizontal() != -1) || super.isSideInvisible(state, stateFrom, direction);
     }
 }

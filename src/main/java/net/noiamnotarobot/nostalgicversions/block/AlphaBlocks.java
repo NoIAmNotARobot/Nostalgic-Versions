@@ -377,7 +377,7 @@ public class AlphaBlocks {
                     .ticksRandomly()
                     .breakInstantly()
                     .pistonBehavior(PistonBehavior.DESTROY)),
-            true
+            false
     );
     public static final Block TILLED_FIELD = register(
             "tilled_field",
@@ -403,8 +403,28 @@ public class AlphaBlocks {
     public static final Block PRESSURE_PLATE_STONE = Blocks.STONE_PRESSURE_PLATE;
     public static final Block DOOR_STEEL = Blocks.IRON_DOOR;
     public static final Block PRESSURE_PLATE_WOOD = Blocks.OAK_PRESSURE_PLATE;
-    public static final Block ORE_REDSTONE = Blocks.REDSTONE_ORE;
-    public static final Block ORE_REDSTONE_GLOWING = Blocks.REDSTONE_ORE;
+    public static final Block ORE_REDSTONE = register(
+            "ore_redstone",
+            new AlphaRedstoneOreBlock(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool(), false),
+            true
+    );
+    public static final Block ORE_REDSTONE_GLOWING = register(
+            "ore_redstone_glowing",
+            new AlphaRedstoneOreBlock(AbstractBlock.Settings.create()
+                    .strength(3.0F, 5.0F)
+                    .sounds(AlphaBlockSoundGroups.STONE)
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(Instrument.BASEDRUM)
+                    .requiresTool()
+                    .ticksRandomly()
+                    .luminance(state -> 10), true),
+            false
+    );
     public static final Block TORCH_REDSTONE_IDLE = Blocks.REDSTONE_TORCH;
     public static final Block TORCH_REDSTONE_ACTIVE = Blocks.REDSTONE_TORCH;
     public static final Block BUTTON = Blocks.STONE_BUTTON;
@@ -455,7 +475,19 @@ public class AlphaBlocks {
                     .instrument(Instrument.FLUTE)),
             true
     );
-    public static final Block REED = Blocks.SUGAR_CANE;
+    public static final Block REED = register(
+            "reed",
+            new AlphaReedBlock(AbstractBlock.Settings.create()
+                    .hardness(0.0F)
+                    .sounds(AlphaBlockSoundGroups.GRASS)
+                    .ticksRandomly()
+                    .noCollision()
+                    .nonOpaque()
+                    .breakInstantly()
+                    .mapColor(MapColor.DARK_GREEN)
+                    .pistonBehavior(PistonBehavior.DESTROY)),
+            false
+    );
     public static final Block JUKEBOX = Blocks.JUKEBOX;
     public static final Block FENCE = Blocks.OAK_FENCE;
 

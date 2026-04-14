@@ -14,10 +14,11 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class AlphaFarmlandBlock extends Block {
+public class AlphaFarmlandBlock extends Block implements AlphaEntityWalking {
     public static final IntProperty MOISTURE = Properties.MOISTURE;
 
     public AlphaFarmlandBlock(Settings settings) {
@@ -26,6 +27,11 @@ public class AlphaFarmlandBlock extends Block {
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return createCuboidShape(0, 0, 0, 16, 15, 16);
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.fullCube();
     }
 
     public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
@@ -43,10 +49,8 @@ public class AlphaFarmlandBlock extends Block {
         }
     }
 
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        super.onSteppedOn(world, pos, state, entity);
-
-        if (entity instanceof LivingEntity && world.random.nextInt(4) == 0) {
+    public void onEntityWalking(World world, BlockPos pos, Entity entity) {
+        if (entity instanceof LivingEntity && !entity.isSneaking() && world.random.nextInt(4) == 0) {
             world.setBlockState(pos, AlphaBlocks.DIRT.getDefaultState());
         }
     }
